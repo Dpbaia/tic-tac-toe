@@ -1,4 +1,5 @@
 <%= form_with(model: @choice, method: "patch") do |form| %>
+  <%# Whole cell holds the submit button, passing forward the position and the mark %>
   <%= form.hidden_field :position, value: choice.position %>
   <%= form.hidden_field :current_user, value: current_user.id %>
   <%= form.hidden_field :mark, value: current_user.mark_shape %>
