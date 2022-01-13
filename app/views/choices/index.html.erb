@@ -16,39 +16,43 @@
     -	If there is a win, stop game, show winner x
  %>
 
-<% if @win %>
-  <h2>Player Playing <%= @win[1].capitalize %>  Won!</h2>
-  <%= link_to "Want to play again?", choices_path, method: "delete" %>
-<% end %>
 
-<% if @draw %>
-  <h2>Draw!</h2>
-  <%= link_to "Want to play again?", choices_path, method: "delete" %>
-<% end %>
+<div class="results">
+  <% if @win %>
+    <h2>Player Playing <%= @win[1].capitalize %>  Won!</h2>
+    <%= link_to "Want to play again?", choices_path, method: "delete" %>
+  <% end %>
+  <% if @draw %>
+    <h2>Draw!</h2>
+    <%= link_to "Want to play again?", choices_path, method: "delete" %>
+  <% end %>
+</div>
 
-<table>
-  <tr>
-    <% for choice in @choices %>
-      <% if choice.position == 4 || choice.position == 7%>
-        <%# Breaks to a new line of the table when we reach the 4th and 7th square %>
-        </tr>
-        <th id="<%= choice.position %>" class="<%= choice.mark %>">
-          <%# Only allow for clicking when it's not already been marked and no one won %>
-          <% unless choice.mark == "cross" || choice.mark == "circle" || @win %>
-            <%= render "choices/partials/form", choice: choice %>
-          <% end %>
-        </th>
-      <% else %>
-        <th id="<%= choice.position %>" class="<%= choice.mark %>">
-          <%# Only allow for clicking when it's not already been marked and no one won %>
-          <% unless choice.mark == "cross" || choice.mark == "circle" || @win %>
-            <%= render "choices/partials/form", choice: choice %>
-          <% end %>
-        </th>
+<div class="game">
+  <table>
+    <tr>
+      <% for choice in @choices %>
+        <% if choice.position == 4 || choice.position == 7%>
+          <%# Breaks to a new line of the table when we reach the 4th and 7th square %>
+          </tr>
+          <th id="<%= choice.position %>" class="<%= choice.mark %>">
+            <%# Only allow for clicking when it's not already been marked and no one won %>
+            <% unless choice.mark == "cross" || choice.mark == "circle" || @win %>
+              <%= render "choices/partials/form", choice: choice %>
+            <% end %>
+          </th>
+        <% else %>
+          <th id="<%= choice.position %>" class="<%= choice.mark %>">
+            <%# Only allow for clicking when it's not already been marked and no one won %>
+            <% unless choice.mark == "cross" || choice.mark == "circle" || @win %>
+              <%= render "choices/partials/form", choice: choice %>
+            <% end %>
+          </th>
+        <% end %>
       <% end %>
-    <% end %>
-  </tr>
-</table>
+    </tr>
+  </table>
+</div>
 
 <% flash.each do |type, msg| %>
   <div>
