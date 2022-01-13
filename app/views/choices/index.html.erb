@@ -6,17 +6,16 @@
     o	Change background image from clear to circle or cross x
     ♣	Add class that holds background-image: circle or cross x
   -	Block that square from being clicked any further x
-  -	Block you from making any more moves until the next player has clicked
+  -	Block you from making any more moves until the next player has clicked x
+    - Users has to sign in before making a move x
+    - Has a total of 2 users only
+    - Automatically assign one mark for each x
+    - Always start with a certain one and based on number of "none" will determine which player is allowed to move? x
   Whenever there is a click
-    -	Game checks if there are any wins
-    o	Check if the same class for the bg is appearing in all directions (or through the numbering system)
-    -	If there is a win, stop game, show winners
+    -	Game checks if there are any wins x
+    o	Check if the same class for the bg is appearing in all directions (or through the numbering system) x
+    -	If there is a win, stop game, show winner x
  %>
-
-<%# [1 2 3
-    4 5 6
-    7 8 9] %>
-
 
 <% if @win %>
   <h2>Player placeholder Won!</h2>
@@ -30,7 +29,8 @@
           <% unless choice.mark == "cross" || choice.mark == "circle" || @win %>
             <%= form_with(model: @choice, method: "patch") do |form| %>
               <%= form.hidden_field :position, value: choice.position %>
-              <%= form.hidden_field :mark, value: "cross" %>
+              <%= form.hidden_field :current_user, value: current_user %>
+              <%= form.hidden_field :mark, value: current_user.mark_shape %>
               <%= form.submit "", class: "submit" %>
             <% end %>
           <% end %>
@@ -40,7 +40,8 @@
           <% unless choice.mark == "cross" || choice.mark == "circle" || @win  %>
             <%= form_with(model: @choice, method: "patch") do |form| %>
               <%= form.hidden_field :position, value: choice.position %>
-              <%= form.hidden_field :mark, value: "cross" %>
+              <%= form.hidden_field :current_user, value: current_user.id %>
+              <%= form.hidden_field :mark, value: current_user.mark_shape %>
               <%= form.submit "", class: "submit" %>
             <% end %>
           <% end %>
@@ -49,3 +50,9 @@
     <% end %>
   </tr>
 </table>
+
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>

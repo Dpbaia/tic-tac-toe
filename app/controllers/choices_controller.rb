@@ -1,4 +1,6 @@
 class ChoicesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @choices = Choice.all
     @choice = Choice.new
@@ -6,8 +8,14 @@ class ChoicesController < ApplicationController
   end
 
   def update
-    Choice.update(choice_params)
-    redirect_to root_path
+    user_id = params['choice']['current_user'].to_i
+    progress = Choice.where(mark: 'none').length
+    if (user_id.odd? && progress.odd?) || (user_id.to_i.even? && progress.even?)
+      Choice.update(choice_params)
+      redirect_to root_path
+    else
+      redirect_to root_path, notice: 'This is not your turn.'
+    end
   end
 
   def win
@@ -21,7 +29,6 @@ class ChoicesController < ApplicationController
                  [3, 5, 7]]
 
     lines_check(lines) || lines_check(columns) || lines_check(diagonals)
-
   end
 
   def lines_check(lines)
