@@ -18,6 +18,14 @@ class ChoicesController < ApplicationController
     end
   end
 
+  def destroy
+    Choice.destroy_all
+    (1..9).each do |number|
+      Choice.create(position: number, mark: 'none')
+    end
+    redirect_to root_path
+  end
+
   def win
     lines = [[1, 2, 3],
              [4, 5, 6],

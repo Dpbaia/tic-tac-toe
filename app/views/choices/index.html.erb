@@ -8,7 +8,6 @@
   -	Block that square from being clicked any further x
   -	Block you from making any more moves until the next player has clicked x
     - Users has to sign in before making a move x
-    - Has a total of 2 users only
     - Automatically assign one mark for each x
     - Always start with a certain one and based on number of "none" will determine which player is allowed to move? x
   Whenever there is a click
@@ -19,6 +18,8 @@
 
 <% if @win %>
   <h2>Player placeholder Won!</h2>
+  <p></p>
+  <%= link_to "Want to play again?", choices_path, method: "delete" %>
 <% end %>
 <table>
   <tr>
