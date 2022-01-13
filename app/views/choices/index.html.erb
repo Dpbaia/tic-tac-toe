@@ -17,7 +17,7 @@
  %>
 
 <% if @win %>
-  <h2>Player placeholder Won!</h2>
+  <h2>Player Playing <%= @win[1].capitalize %>  Won!</h2>
   <%= link_to "Want to play again?", choices_path, method: "delete" %>
 <% end %>
 

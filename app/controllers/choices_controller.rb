@@ -5,7 +5,7 @@ class ChoicesController < ApplicationController
     @choices = Choice.all
     @choice = Choice.new
     @win = win
-    @draw = Choice.where(mark: 'none').length == 0
+    @draw = Choice.where(mark: 'none').length.zero?
   end
 
   def update
@@ -36,21 +36,21 @@ class ChoicesController < ApplicationController
                [3, 6, 9]]
     diagonals = [[1, 5, 9],
                  [3, 5, 7]]
-
-    lines_check(lines) || lines_check(columns) || lines_check(diagonals)
+    checks = [lines_check(lines), lines_check(columns), lines_check(diagonals)]
+    checks.find { |check| check[0] == true }
   end
 
   def lines_check(lines)
-    victory = false
+    victory_status = [false, nil]
     lines.each do |line|
       line_through = []
       line.each do |position|
         positions_mark = Choice.all.find_by(position: position).mark
         line_through.append(positions_mark) unless line_through.include?(positions_mark)
       end
-      victory = true if line_through.length == 1 && line_through[0] != 'none'
+      victory_status = [true, line_through[0]] if line_through.length == 1 && line_through[0] != 'none'
     end
-    victory
+    victory_status
   end
 
   private
