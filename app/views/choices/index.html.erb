@@ -1,13 +1,50 @@
 <h1>Tic Tac Toe</h1>
 
+<%# When you click on the little square, it will
+  -	Create a new instance of the model with the position you clicked and which mark is yours x
+  -	Display your choice x
+    o	Change background image from clear to circle or cross x
+    ♣	Add class that holds background-image: circle or cross x
+  -	Block that square from being clicked any further x
+  -	Block you from making any more moves until the next player has clicked
+  Whenever there is a click
+    -	Game checks if there are any wins
+    o	Check if the same class for the bg is appearing in all directions (or through the numbering system)
+    -	If there is a win, stop game, show winners
+ %>
+
+<%# [1 2 3
+    4 5 6
+    7 8 9] %>
+
+
+<% if @win %>
+  <h2>Player placeholder Won!</h2>
+<% end %>
 <table>
   <tr>
     <% for choice in @choices %>
-      <% if  choice.position == 4 || choice.position == 7%>
+      <% if choice.position == 4 || choice.position == 7%>
         </tr>
-        <th id="<%= choice.position %>" class="<%= choice.mark %>"> </th>
+        <th id="<%= choice.position %>" class="<%= choice.mark %>">
+          <% unless choice.mark == "cross" || choice.mark == "circle" || @win %>
+            <%= form_with(model: @choice, method: "patch") do |form| %>
+              <%= form.hidden_field :position, value: choice.position %>
+              <%= form.hidden_field :mark, value: "cross" %>
+              <%= form.submit "", class: "submit" %>
+            <% end %>
+          <% end %>
+        </th>
       <% else %>
-        <th id="<%= choice.position %>" class="<%= choice.mark %>"> </th>
+        <th id="<%= choice.position %>" class="<%= choice.mark %>">
+          <% unless choice.mark == "cross" || choice.mark == "circle" || @win  %>
+            <%= form_with(model: @choice, method: "patch") do |form| %>
+              <%= form.hidden_field :position, value: choice.position %>
+              <%= form.hidden_field :mark, value: "cross" %>
+              <%= form.submit "", class: "submit" %>
+            <% end %>
+          <% end %>
+        </th>
       <% end %>
     <% end %>
   </tr>
