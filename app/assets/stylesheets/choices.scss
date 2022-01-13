@@ -1,0 +1,19 @@
+// Place all the styles related to the Choices controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+th{
+  width: 100px;
+  height: 100px;
+  background: bisque;
+  background-size: cover;
+}
+
+.circle{
+  background-image: url("https://img.icons8.com/ios/344/circled.png");
+
+}
+
+.cross{
+  background-image: url("https://img.icons8.com/fluency-systems-regular/344/x.png");
+}

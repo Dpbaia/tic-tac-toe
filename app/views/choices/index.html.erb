@@ -1,0 +1,14 @@
+<h1>Tic Tac Toe</h1>
+
+<table>
+  <tr>
+    <% for choice in @choices %>
+      <% if  choice.position == 4 || choice.position == 7%>
+        </tr>
+        <th id="<%= choice.position %>" class="<%= choice.mark %>"> </th>
+      <% else %>
+        <th id="<%= choice.position %>" class="<%= choice.mark %>"> </th>
+      <% end %>
+    <% end %>
+  </tr>
+</table>
