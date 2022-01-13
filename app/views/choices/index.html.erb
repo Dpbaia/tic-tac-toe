@@ -18,9 +18,14 @@
 
 <% if @win %>
   <h2>Player placeholder Won!</h2>
-  <p></p>
   <%= link_to "Want to play again?", choices_path, method: "delete" %>
 <% end %>
+
+<% if @draw %>
+  <h2>No one won!</h2>
+  <%= link_to "Want to play again?", choices_path, method: "delete" %>
+<% end %>
+
 <table>
   <tr>
     <% for choice in @choices %>
@@ -28,23 +33,13 @@
         </tr>
         <th id="<%= choice.position %>" class="<%= choice.mark %>">
           <% unless choice.mark == "cross" || choice.mark == "circle" || @win %>
-            <%= form_with(model: @choice, method: "patch") do |form| %>
-              <%= form.hidden_field :position, value: choice.position %>
-              <%= form.hidden_field :current_user, value: current_user %>
-              <%= form.hidden_field :mark, value: current_user.mark_shape %>
-              <%= form.submit "", class: "submit" %>
-            <% end %>
+            <%= render "choices/partials/form", choice: choice %>
           <% end %>
         </th>
       <% else %>
         <th id="<%= choice.position %>" class="<%= choice.mark %>">
-          <% unless choice.mark == "cross" || choice.mark == "circle" || @win  %>
-            <%= form_with(model: @choice, method: "patch") do |form| %>
-              <%= form.hidden_field :position, value: choice.position %>
-              <%= form.hidden_field :current_user, value: current_user.id %>
-              <%= form.hidden_field :mark, value: current_user.mark_shape %>
-              <%= form.submit "", class: "submit" %>
-            <% end %>
+          <% unless choice.mark == "cross" || choice.mark == "circle" || @win %>
+            <%= render "choices/partials/form", choice: choice %>
           <% end %>
         </th>
       <% end %>

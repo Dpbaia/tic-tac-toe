@@ -5,6 +5,7 @@ class ChoicesController < ApplicationController
     @choices = Choice.all
     @choice = Choice.new
     @win = win
+    @draw = Choice.where(mark: 'none').length == 0
   end
 
   def update
